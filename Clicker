@@ -1,0 +1,336 @@
+package hra;
+
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.HeadlessException;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+public class Clicker extends JFrame {
+	
+	private int cheat = 99;
+	private int cash = 0;
+	private int click = 1;
+	private int income = 0;
+	
+	public static void main(String[] args) throws HeadlessException, InterruptedException {
+		//\\			(-_-)/ hello comrade
+		new Clicker();
+		/* To do list: 
+		 * upgrades for click
+		 * upgrades for idle
+		 * skill tree
+		 * save/load
+		 * achievements
+		 * xp/level ???
+		 * optional replay
+		 * gamble
+		 * graphic
+		 * mini-games
+		 * zjisti jestli jsoudatový typy dostačující*/
+	}
+	
+	public Clicker() throws HeadlessException, InterruptedException {
+		setSize(500, 750);
+		setResizable(false);
+		setLocationRelativeTo(null);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setLayout(null);
+		setVisible(true);
+		
+		//panels
+		JPanel base = new JPanel();
+		base.setLayout(null);
+		base.setBounds(0, 0, 500, 750);
+		add(base);
+		
+		JPanel uMenu1 = new JPanel();
+		uMenu1.setLayout(null);
+		uMenu1.setBounds(0, 0, 500, 750);
+		add(uMenu1);
+		uMenu1.setVisible(false);
+		
+		JPanel uMenu2 = new JPanel();
+		uMenu2.setLayout(null);
+		uMenu2.setBounds(0, 0, 500, 750);
+		add(uMenu2);
+		uMenu2.setVisible(false);
+		//base menu panel
+		JLabel title = new JLabel("Spše clicker");
+		title.setBounds(10, 10, 200, 20);
+		title.setFont(new Font("Courier New", Font.ITALIC, 12));
+		//title.setOpaque(true);
+		//title.setBackground(Color.gray);
+		base.add(title);
+		
+		JLabel money = new JLabel("Prestiž: "+Integer.toString(cash));
+		money.setBounds(10, 50, 100, 20);
+		money.setOpaque(true);
+		money.setBackground(Color.lightGray); 
+		base.add(money);
+		
+		JLabel inco = new JLabel("za sekundu: "+Integer.toString(income));
+		inco.setBounds(290, 50, 100, 20);
+		inco.setOpaque(true);
+		inco.setBackground(Color.lightGray); 
+		base.add(inco);
+		
+		JLabel inClick = new JLabel("na click: "+Integer.toString(click));
+		inClick.setBounds(150, 50, 100, 20);
+		inClick.setOpaque(true);
+		inClick.setBackground(Color.lightGray);
+		base.add(inClick);
+		
+		Center center = new Center(130, 230, 230);
+		base.add(center);
+		
+		JButton upgrades = new JButton("upgrades");
+		upgrades.setBounds(50, 600, 85, 30);
+		base.add(upgrades);
+		
+		//upgrade menu on click panel
+		JLabel money2 = new JLabel("Prestiž: "+Integer.toString(cash));
+		money2.setBounds(10, 50, 100, 20);
+		money2.setOpaque(true);
+		money2.setBackground(Color.lightGray); 
+		uMenu1.add(money2);
+		
+		JButton back1 = new JButton("back");
+		back1.setBounds(50, 600, 85, 30);
+		uMenu1.add(back1);
+		
+		JButton clicku = new JButton("click");
+		clicku.setBounds(140, 600, 85, 30);
+		uMenu1.add(clicku);
+		
+		JButton u1 = new JButton("cost: 10");
+		u1.setBounds(350, 80, 100, 30);
+		uMenu1.add(u1);
+		
+		JButton u2 = new JButton("cost: 100");
+		u2.setBounds(350, 120, 100, 30);
+		uMenu1.add(u2);
+		
+		JButton u3 = new JButton("cost: 1000");
+		u3.setBounds(350, 160, 100, 30);
+		uMenu1.add(u3);
+		
+		JButton u4 = new JButton("cost: 10000");
+		u4.setBounds(350, 200, 100, 30);
+		uMenu1.add(u4);
+		
+		JButton u5 = new JButton("cost: 100000");
+		u5.setBounds(350, 240, 100, 30);
+		uMenu1.add(u5);
+		
+		JButton u6 = new JButton("cost: a lot");
+		u6.setBounds(350, 280, 100, 30);
+		uMenu1.add(u6);
+		
+		JLabel u1l = new JLabel("+1 prestiž on click");
+		u1l.setBounds(220, 80, 150, 30);
+		uMenu1.add(u1l);
+		
+		JLabel u2l = new JLabel("+10 prestiž on click");
+		u2l.setBounds(220, 120, 150, 30);
+		uMenu1.add(u2l);
+		
+		JLabel u3l = new JLabel("+100 prestiž on click");
+		u3l.setBounds(220, 160, 150, 30);
+		uMenu1.add(u3l);
+		
+		JLabel u4l = new JLabel("+1000 prestiž on click");
+		u4l.setBounds(220, 200, 150, 30);
+		uMenu1.add(u4l);
+		
+		JLabel u5l = new JLabel("+1000 prestiž on click");
+		u5l.setBounds(220, 240, 150, 30);
+		uMenu1.add(u5l);
+		
+		JLabel u6l = new JLabel("+1 slave for clicking");
+		u6l.setBounds(220, 280, 150, 30);
+		uMenu1.add(u6l);
+		
+		//upgrade menu on idle panel
+		JLabel money3 = new JLabel("Prestiž: "+Integer.toString(cash));
+		money3.setBounds(10, 50, 100, 20);
+		money3.setOpaque(true);
+		money3.setBackground(Color.lightGray); 
+		uMenu2.add(money3);
+		
+		JButton back2 = new JButton("back");
+		back2.setBounds(50, 600, 85, 30);
+		uMenu2.add(back2);
+		
+		JButton idleu = new JButton("idle");
+		idleu.setBounds(140, 600, 85, 30);
+		uMenu2.add(idleu);
+		
+		JButton i1 = new JButton("cost: 100");
+		i1.setBounds(350, 80, 100, 30);
+		uMenu2.add(i1);
+		
+		JButton i2 = new JButton("cost: 1000");
+		i2.setBounds(350, 120, 100, 30);
+		uMenu2.add(i2);
+		
+		JButton i3 = new JButton("cost: 10000");
+		i3.setBounds(350, 160, 100, 30);
+		uMenu2.add(i3);
+		
+		JButton i4 = new JButton("cost: 100000");
+		i4.setBounds(350, 200, 100, 30);
+		uMenu2.add(i4);
+		
+		JButton i5 = new JButton("cost: too much");
+		i5.setBounds(350, 240, 100, 30);
+		uMenu2.add(i5);
+		
+		JButton i6 = new JButton("cost: kidney");
+		i6.setBounds(350, 280, 100, 30);
+		uMenu2.add(i6);
+		
+		JLabel i1l = new JLabel("+1 prestiž per second");
+		i1l.setBounds(150, 80, 200, 30);
+		uMenu2.add(i1l);
+		
+		JLabel i2l = new JLabel("+10 prestiž per second");
+		i2l.setBounds(150, 120, 200, 30);
+		uMenu2.add(i2l);
+		
+		JLabel i3l = new JLabel("+100 prestiž per second");
+		i3l.setBounds(150, 160, 200, 30);
+		uMenu2.add(i3l);
+		
+		JLabel i4l = new JLabel("+1000 prestiž oper second");
+		i4l.setBounds(150, 200, 200, 30);
+		uMenu2.add(i4l);
+		
+		JLabel i5l = new JLabel("+hodně prestiž per second");
+		i5l.setBounds(150, 240, 200, 30);
+		uMenu2.add(i5l);
+		
+		JLabel i6l = new JLabel("ano tato hra podporuje mikrotransakce s ledvinami");
+		i6l.setBounds(50, 280, 310, 30);
+		uMenu2.add(i6l);
+		//base menu action listeners
+		center.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				cash = cash + click + cheat;
+	    		money.setText("Prestiž: "+Integer.toString(cash));
+	    		inClick.setText("na click: "+Integer.toString(click));
+			}	    
+	    });
+		
+		upgrades.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				base.setVisible(false);
+				uMenu1.setVisible(true);
+	    		money2.setText("Prestiž: "+Integer.toString(cash));
+			}	    
+	    });
+		
+		
+		//click upgrade menu action listeners
+		back1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				base.setVisible(true);
+				uMenu1.setVisible(false);
+				money.setText("Prestiž: "+Integer.toString(cash));
+				inClick.setText("na click: "+Integer.toString(click));
+			}	    
+	    });
+		
+		clicku.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				uMenu1.setVisible(false);
+				uMenu2.setVisible(true);
+				money3.setText("Prestiž: "+Integer.toString(cash));
+			}	    
+	    });
+		
+		u1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(cash >= 10){
+					cash = cash - 10;
+					click = click + 1;
+					money2.setText("Prestiž: "+Integer.toString(cash));
+				}
+			}	    
+	    });
+		
+		u2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(cash >= 100){
+					cash = cash - 100;
+					click = click + 10;
+					money2.setText("Prestiž: "+Integer.toString(cash));
+				}
+			}	    
+	    });
+		
+		u3.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(cash >= 1000){
+					cash = cash - 1000;
+					click = click + 100;
+					money2.setText("Prestiž: "+Integer.toString(cash));
+				}
+			}	    
+	    });
+		
+		//idle upgrade menu action listeners
+		back2.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				base.setVisible(true);
+				uMenu2.setVisible(false);
+				money.setText("Prestiž: "+Integer.toString(cash));
+				inClick.setText("na click: "+Integer.toString(click));
+			}	    
+	    });
+		
+		idleu.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				uMenu1.setVisible(true);
+				uMenu2.setVisible(false);
+				money2.setText("Prestiž: "+Integer.toString(cash));
+			}	    
+	    });
+		
+		i1.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				if(cash >= 100){
+					cash = cash - 100;
+					income = income + 1;
+					money3.setText("Prestiž: "+Integer.toString(cash));
+				}
+			}	    
+	    });
+		
+		//ultimate while for income
+		while(true) {
+			Thread.sleep(1000);
+			cash = cash + income;
+			money.setText("Prestiž: "+Integer.toString(cash));
+			money2.setText("Prestiž: "+Integer.toString(cash));
+			money3.setText("Prestiž: "+Integer.toString(cash));
+			inco.setText("za sekundu: "+Integer.toString(income));
+		}
+	}
+}
+
+class Rain extends JPanel {
+	public void paintComponent(Graphics g) {
+		g.setColor(Color.yellow);
+		g.fillOval(20, 100, 50, 50);
+	}
+}
+
+
+
