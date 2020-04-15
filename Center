@@ -1,0 +1,97 @@
+package hra;
+
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.geom.Point2D;
+
+import javax.swing.JButton;
+
+class Center extends JButton {
+	
+	private boolean mouseOver = false;
+	private boolean mousePressed = false;
+
+	public Center(int x, int y, int w){
+		setOpaque(false);
+		setFocusPainted(false);
+		setBorderPainted(false);
+		setBounds(x, y, w, w);
+		setDiameter(w);
+		MouseAdapter mouseListener = new MouseAdapter(){
+			
+			@Override
+			public void mousePressed(MouseEvent me){
+				if(contains(me.getX(), me.getY())){
+					mousePressed = true;
+					repaint();
+				}
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent me){
+				mousePressed = false;
+				repaint();
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent me){
+				mouseOver = false;
+				mousePressed = false;
+				repaint();
+			}
+			
+			@Override
+			public void mouseMoved(MouseEvent me){
+				mouseOver = contains(me.getX(), me.getY());
+				repaint();
+			}	
+		};
+		
+		addMouseListener(mouseListener);
+		addMouseMotionListener(mouseListener);		
+	}
+	
+	private int diameter;
+	
+	public void setDiameter(Integer diameter) { 
+        this.diameter = diameter; 
+    } 
+	
+	private int getDiameter(){
+		return diameter;
+	}
+	
+	
+	@Override
+	public Dimension getPreferredSize(){
+		int Diameter = getDiameter() ;
+		return new Dimension(Diameter, Diameter);
+	}
+	
+	@Override
+	public boolean contains(int x, int y){
+		int radius = getDiameter()/2;
+		return Point2D.distance(x, y, getWidth()/2, getHeight()/2) < radius;
+	}
+	
+	@Override
+	public void paintComponent(Graphics g){
+		
+		int diameter = getDiameter();
+		int radius = diameter/2;
+		
+		if(mousePressed){
+			Color DGreen = new Color(0, 200, 0);
+			g.setColor(DGreen);
+		}
+		else{
+			g.setColor(Color.GREEN);
+		}
+		//g.fillOval(200, 200, diameter, diameter);
+		g.fillOval(getWidth()/2 - radius, getHeight()/2 - radius, diameter, diameter);
+
+	}
+}
